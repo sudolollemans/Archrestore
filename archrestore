@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# --- 1. Install packages ---
+echo "Installing packages..."
+
+sudo pacman -S --needed base-devel git rsync
+
+if [[ -f /home/localuser/Desktop/Scripts/Restorefiles/installedpkglist.txt ]]; then
+    sudo pacman -S --needed - < /home/localuser/Desktop/Scripts/Restorefiles/installedpkglist.txt
+fi
+
+if [[ -f /home/localuser/Desktop/Scripts/Restorefiles/installedaurlist.txt ]]; then
+    yay -S --needed - < /home/localuser/Desktop/Scripts/Restorefiles/installedaurlist.txt
+fi
+
+# --- 2. Restore configs ---
+echo "Restoring /etc..."
+if [[ -d /mnt/backup/etc ]]; then
+    sudo rsync -aAXv /mnt/backup/etc/ /etc/
+fi
+
+echo "Restoring /home..."
+if [[ -d /mnt/backup/home ]]; then
+    sudo rsync -aAXv /mnt/backup/home/ /home/
+fi
+
+# --- 3. Restore system services ---
+if [[ -f /home/localuser/Desktop/Scripts/Restorefiles/services-state.txt ]]; then
+    echo "Restoring system services..."
+
+    while read -r service state _; do
+        case "$state" in
+            enabled)
+                sudo systemctl enable --now "$service"
+                ;;
+            disabled)
+                sudo systemctl disable "$service"
+                ;;
+            masked)
+                sudo systemctl mask "$service"
+                ;;
+        esac
+    done < /home/localuser/Desktop/Scripts/Restorefiles/services-state.txt
+fi
+
+echo "Rebuild complete!"
+
