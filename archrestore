@@ -2,19 +2,21 @@
 set -euo pipefail
 
 # --- 1. Install packages ---
+
 echo "Installing packages..."
 
 sudo pacman -S --needed base-devel git rsync
 
-if [[ -f /home/localuser/Desktop/Scripts/Restorefiles/installedpkglist.txt ]]; then
-    sudo pacman -S --needed - < /home/localuser/Desktop/Scripts/Restorefiles/installedpkglist.txt
+if [[ -f "$HOME/pkglist.txt" ]]; then
+    sudo pacman -S --needed - < "$HOME/pkglist.txt"
 fi
 
-if [[ -f /home/localuser/Desktop/Scripts/Restorefiles/installedaurlist.txt ]]; then
-    yay -S --needed - < /home/localuser/Desktop/Scripts/Restorefiles/installedaurlist.txt
+if [[ -f "$HOME/aurlist.txt" ]]; then
+    yay -S --needed - < "$HOME/aurlist.txt"
 fi
 
 # --- 2. Restore configs ---
+
 echo "Restoring /etc..."
 if [[ -d /mnt/backup/etc ]]; then
     sudo rsync -aAXv /mnt/backup/etc/ /etc/
@@ -26,7 +28,8 @@ if [[ -d /mnt/backup/home ]]; then
 fi
 
 # --- 3. Restore system services ---
-if [[ -f /home/localuser/Desktop/Scripts/Restorefiles/services-state.txt ]]; then
+
+if [[ -f "$HOME/services_state.txt" ]]; then
     echo "Restoring system services..."
 
     while read -r service state _; do
@@ -41,7 +44,7 @@ if [[ -f /home/localuser/Desktop/Scripts/Restorefiles/services-state.txt ]]; the
                 sudo systemctl mask "$service"
                 ;;
         esac
-    done < /home/localuser/Desktop/Scripts/Restorefiles/services-state.txt
+    done < "$HOME/services_state.txt"
 fi
 
 echo "Rebuild complete!"
