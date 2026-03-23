@@ -2,7 +2,7 @@ A system restoration script for Arch Linux that reinstalls packages, restores co
 
 ---
 
-## 📌 Features
+# Features
 
 - Installs base and user packages from saved lists
 - Restores `/etc` and `/home` from backup
@@ -11,7 +11,7 @@ A system restoration script for Arch Linux that reinstalls packages, restores co
 
 ---
 
-## 📂 Expected Backup Files
+# Expected Backup Files
 
 
 ~/pkglist.txt
@@ -23,19 +23,19 @@ A system restoration script for Arch Linux that reinstalls packages, restores co
 
 ---
 
-## 🚀 Usage
+# Usage
 
 sudo ./restore.sh
-⚙️ What it restores
+
+What it restores
 Pacman packages
 AUR packages (via helper)
 System configuration (/etc)
 User data (/home)
 systemd service states
-⚠️ Warning
 
+Warning
 This script can overwrite system configuration and user data.
-
 Only use on a prepared or recovery system.
 
 
