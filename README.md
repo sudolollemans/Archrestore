@@ -15,7 +15,7 @@ _This is a personal tool free to use but mind the coded paths!_
 # Expected Backup Files
 
 
-~/pkglist.txt
+~/pkglist.txt /n
 ~/aurlist.txt
 ~/services_state.txt
 /mnt/backup/etc/
