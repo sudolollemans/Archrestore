@@ -1,5 +1,5 @@
 A system restoration script for Arch Linux that reinstalls packages, restores configuration backups, and re-enables system services.  
-_This is a personal tool free to use but mind the coded paths!_  
+_Note: This is a personal tool created for myself (free to use)_
 
 ---
 
@@ -20,8 +20,6 @@ _This is a personal tool free to use but mind the coded paths!_
 ~/services_state.txt  
 /mnt/backup/etc/  
 /mnt/backup/home/  
-
-_> these files are created with my other script "archmain" so they're coded to my use_
 
 ---
 
