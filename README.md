@@ -25,7 +25,7 @@ _Note: This is a personal tool created for myself (free to use)_
 
 # Usage
 
-sudo ./restore.sh  
+sudo ./archrestore
 
 What it restores  
 Pacman packages  
